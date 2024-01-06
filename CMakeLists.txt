@@ -176,17 +176,21 @@ get_filename_component("PROJECT_BINARY_DIR_NAME" "${PROJECT_BINARY_DIR}" NAME)
 get_filename_component("PROJECT_BINARY_DIR_PARENT" "${PROJECT_BINARY_DIR}" DIRECTORY)
 get_filename_component("PROJECT_BINARY_DIR_PARENT_NAME" "${PROJECT_BINARY_DIR_PARENT}" NAME)
 
+set(FOONATHAN_MEMORY_BUILD_EXAMPLES "NO" CACHE BOOL "..." FORCE)
+set(FOONATHAN_MEMORY_BUILD_TESTS "NO" CACHE BOOL "..." FORCE)
+set(FOONATHAN_MEMORY_BUILD_TOOLS "NO" CACHE BOOL "..." FORCE)
+
 add_subdirectory("${PROJECT_BINARY_DIR_PARENT_NAME}/${PROJECT_BINARY_DIR_NAME}/memory-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}-${PROJECT_VERSION_PATCH}")
 
 add_custom_target("cmake-install"
     COMMAND "${CMAKE_COMMAND}" --install "${PROJECT_BINARY_DIR}" --prefix "${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}"
-    DEPENDS "foonathan_memory" "foonathan_memory_node_size_debugger"
+    DEPENDS "${PROJECT_NAME}"
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
     USES_TERMINAL
     VERBATIM
 )
 
-#[[add_custom_target("conan-export"
+add_custom_target("conan-export"
     COMMAND "${CONAN_COMMAND}" "export-pkg"
             #"--force"
             "--package-folder" "${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}"
@@ -197,4 +201,4 @@ add_custom_target("cmake-install"
     DEPENDS "cmake-install"
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
     VERBATIM
-)]]
+)

@@ -1,1 +1,1 @@
-foonathan-memory: 0.7.3
+foonathan_memory: 0.7.3
